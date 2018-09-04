@@ -18,6 +18,7 @@ import re
 from kipy.fileobjs import SchFile
 from kipy.fileobjs import SchItem
 from kipy.fileobjs.sch.simple import *
+from kipy.fileobjs.sch.sheet import *
 from kipy.fileobjs.sch.comp import Component
 from kipy.fileobjs.sch.schfile import LibInfo
 from kipy.utility import FileAccess
@@ -66,6 +67,17 @@ def newRefDes(item, clone, x, y, xoffset, yoffset, cloneno):
         clone.text = subRefDes(item.text, cloneno)
         clone.posx = clone.posx + xoffset * x
         clone.posy = clone.posy + yoffset * y
+
+    if item.__class__ == Sheet:
+        clone.startx += xoffset * x
+        clone.starty += yoffset * y
+        clone.endx += xoffset * x
+        clone.endy += yoffset * y
+        for i, field in enumerate(clone.fields):
+            field.name = subRefDes(field.name, cloneno)
+            if i >= 2:
+                field.posx += xoffset * x
+                field.posy += yoffset * y
 
     if item.__class__ == Connection:
         clone.posx = clone.posx + xoffset * x
