@@ -16,6 +16,6 @@ def subRefDes(template, x):
             print 'Could not parse template refdes %s' % template
             exit(1)
     else:
-        refdes = '%s_%s' % (template,x)
+        refdes = template
     return refdes
             
